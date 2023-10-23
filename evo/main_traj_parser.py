@@ -136,6 +136,7 @@ def parser() -> argparse.ArgumentParser:
         parents=[shared_parser])
     tum_parser.add_argument("traj_files",
                             help="one or multiple trajectory files", nargs='+')
+    tum_parser.add_argument("--alg_labels", default=None, help="one or more algorithm labels", nargs="+")
 
     euroc_parser = sub_parsers.add_parser(
         "euroc",

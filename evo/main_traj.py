@@ -328,6 +328,7 @@ def run(args):
 
             short_traj_name = to_compact_name(args.ref, args,
                                               SETTINGS.plot_usetex)
+            short_traj_name = "Groundtruth"
             plot.traj(ax_traj, plot_mode, ref_traj,
                       style=SETTINGS.plot_reference_linestyle,
                       color=SETTINGS.plot_reference_color,
@@ -364,13 +365,17 @@ def run(args):
             cmap_colors = iter(cmap(np.linspace(0, 1, len(trajectories))))
         color_palette = itertools.cycle(sns.color_palette())
 
-        for name, traj in trajectories.items():
+        for i, (name, traj) in enumerate(trajectories.items()):
             if cmap_colors is None:
                 color = next(color_palette)
             else:
                 color = next(cmap_colors)
 
-            short_traj_name = to_compact_name(name, args, SETTINGS.plot_usetex)
+            if (args.alg_labels is not None):
+                short_traj_name = args.alg_labels[i]
+            else:
+                short_traj_name = to_compact_name(name, args, SETTINGS.plot_usetex)
+
             plot.traj(ax_traj, plot_mode, traj,
                       SETTINGS.plot_trajectory_linestyle, color,
                       short_traj_name, alpha=SETTINGS.plot_trajectory_alpha,
