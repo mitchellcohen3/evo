@@ -37,11 +37,7 @@ SEP = "-" * 80  # separator line
 CONFLICT_TEMPLATE = """
 Mismatching titles - risk of aggregating data from different metrics. Conflict:
 
-<<<<<<< {0}
 {1}
-=======
-{2}
->>>>>>> {3}
 
 Only the first one will be used as the title!"""
 
@@ -61,7 +57,7 @@ def run(args: argparse.Namespace) -> None:
 
     df = pandas_bridge.load_results_as_dataframe(args.result_files,
                                                  args.use_filenames,
-                                                 args.merge)
+                                                 args.merge, args.alg_labels)
 
     keys = df.columns.values.tolist()
     if SETTINGS.plot_usetex:

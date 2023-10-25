@@ -19,6 +19,9 @@ def parser() -> argparse.ArgumentParser:
     main_parser.add_argument("--use_filenames",
                              help="use the filenames to label the data",
                              action="store_true")
+    main_parser.add_argument("--alg_labels", 
+                                help="one or more algorithm labels", nargs="+", default=None)
+
     main_parser.add_argument("--ignore_title",
                              help="don't try to find a common metric title",
                              action="store_true")

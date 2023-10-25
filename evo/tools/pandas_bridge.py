@@ -111,7 +111,8 @@ def save_df_as_table(df: pd.DataFrame, path: str,
 
 def load_results_as_dataframe(result_files: typing.Iterable[str],
                               use_filenames: bool = False,
-                              merge: bool = False) -> pd.DataFrame:
+                              merge: bool = False,
+                              alg_names: typing.List[str] = None) -> pd.DataFrame:
     """
     Load multiple result files into a MultiIndex dataframe.
     :param result_files: result files to load
@@ -124,8 +125,13 @@ def load_results_as_dataframe(result_files: typing.Iterable[str],
         return result_to_df(result.merge_results(results))
 
     df = pd.DataFrame()
-    for result_file in result_files:
+    for i, result_file in enumerate(result_files):
         result_obj = file_interface.load_res_file(result_file)
-        name = result_file if use_filenames else None
+        if use_filenames:
+            name = result_file
+        elif alg_names is not None:
+            name = alg_names[i]
+        else:
+            name = None
         df = pd.concat([df, result_to_df(result_obj, name)], axis="columns")
     return df
